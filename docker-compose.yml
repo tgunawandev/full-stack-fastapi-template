@@ -18,6 +18,7 @@ services:
       - POSTGRES_PASSWORD=1234567890
       - POSTGRES_USER=${POSTGRES_USER?Variable not set}
       - POSTGRES_DB=${POSTGRES_DB?Variable not set}
+      - POSTGRES_PORT=${POSTGRES_PORT}
     networks:
       - default
 

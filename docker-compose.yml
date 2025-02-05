@@ -21,6 +21,8 @@ services:
       - POSTGRES_PORT=${POSTGRES_PORT}
     networks:
       - default
+    ports:
+      - 5433:5432
 
   adminer:
     image: adminer

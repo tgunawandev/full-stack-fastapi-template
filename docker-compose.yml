@@ -21,8 +21,6 @@ services:
       - POSTGRES_PORT=${POSTGRES_PORT}
     networks:
       - default
-    ports:
-      - 5432:5432
 
   adminer:
     image: adminer
@@ -52,7 +50,6 @@ services:
     build:
       context: ./backend
     networks:
-      - dokploy-network
       - default
     depends_on:
       db:

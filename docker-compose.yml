@@ -23,7 +23,7 @@ services:
     image: adminer
     restart: always
     networks:
-      - traefik-public
+      - dokploy-network
       - default
     depends_on:
       - db
@@ -31,8 +31,8 @@ services:
       - ADMINER_DESIGN=pepa-linha-dark
     labels:
       - traefik.enable=true
-      - traefik.docker.network=traefik-public
-      - traefik.constraint-label=traefik-public
+      - traefik.docker.network=dokploy-network
+      - traefik.constraint-label=dokploy-network
       - traefik.http.routers.${STACK_NAME?Variable not set}-adminer-http.rule=Host(`adminer.${DOMAIN?Variable not set}`)
       - traefik.http.routers.${STACK_NAME?Variable not set}-adminer-http.entrypoints=http
       - traefik.http.routers.${STACK_NAME?Variable not set}-adminer-http.middlewares=https-redirect
@@ -47,7 +47,7 @@ services:
     build:
       context: ./backend
     networks:
-      - traefik-public
+      - dokploy-network
       - default
     depends_on:
       db:
@@ -79,7 +79,7 @@ services:
     image: '${DOCKER_IMAGE_BACKEND?Variable not set}:${TAG-latest}'
     restart: always
     networks:
-      - traefik-public
+      - dokploy-network
       - default
     depends_on:
       db:
@@ -118,8 +118,8 @@ services:
       context: ./backend
     labels:
       - traefik.enable=true
-      - traefik.docker.network=traefik-public
-      - traefik.constraint-label=traefik-public
+      - traefik.docker.network=dokploy-network
+      - traefik.constraint-label=dokploy-network
 
       - traefik.http.services.${STACK_NAME?Variable not set}-backend.loadbalancer.server.port=8000
 
@@ -138,7 +138,7 @@ services:
     image: '${DOCKER_IMAGE_FRONTEND?Variable not set}:${TAG-latest}'
     restart: always
     networks:
-      - traefik-public
+      - dokploy-network
       - default
     build:
       context: ./frontend
@@ -147,8 +147,8 @@ services:
         - NODE_ENV=production
     labels:
       - traefik.enable=true
-      - traefik.docker.network=traefik-public
-      - traefik.constraint-label=traefik-public
+      - traefik.docker.network=dokploy-network
+      - traefik.constraint-label=dokploy-network
 
       - traefik.http.services.${STACK_NAME?Variable not set}-frontend.loadbalancer.server.port=80
 
@@ -166,6 +166,6 @@ volumes:
   app-db-data:
 
 networks:
-  traefik-public:
+  dokploy-network:
     # Allow setting it to false for testing
     external: true

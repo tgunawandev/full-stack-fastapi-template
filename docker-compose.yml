@@ -81,7 +81,7 @@ services:
       - POSTGRES_PORT=5432
       - POSTGRES_DB=app
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=1234567890
+      #- POSTGRES_PASSWORD=1234567890
       - SENTRY_DSN=${SENTRY_DSN}
 
   backend:

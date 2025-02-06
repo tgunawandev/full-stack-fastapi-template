@@ -2,6 +2,7 @@ services:
 
   db:
     image: postgres:12
+    command: postgres -c log_statement=all -c log_connections=on -c log_disconnections=on
     restart: always
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
@@ -57,8 +58,9 @@ services:
         restart: true
     command: >
       sh -c "
+      apt-get update && apt-get install -y postgresql-client;
       env | grep POSTGRES_;
-      ping -c 2 db;
+      PGPASSWORD=1234567890 psql -h db -U postgres -d app -c '\l';
       bash scripts/prestart.sh
       "
     env_file:

@@ -58,9 +58,9 @@ services:
         restart: true
     command: >
       sh -c "
-      apt-get update && apt-get install -y postgresql-client;
-      env | grep POSTGRES_;
-      PGPASSWORD=1234567890 psql -h db -U postgres -d app -c '\l';
+      echo 'Waiting for db to be ready...';
+      sleep 5;
+      PGPASSWORD='1234567890' psql -h db -U postgres -d app -c '\l';
       bash scripts/prestart.sh
       "
     env_file:

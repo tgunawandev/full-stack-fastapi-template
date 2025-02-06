@@ -2,7 +2,14 @@ services:
 
   db:
     image: postgres:12
-    command: postgres -c log_statement=all -c log_connections=on -c log_disconnections=on
+    command: 
+      - "postgres"
+      - "-c"
+      - "log_connections=on"
+      - "-c"
+      - "log_disconnections=on"
+      - "-c"
+      - "password_encryption=md5"
     restart: always
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
@@ -81,7 +88,7 @@ services:
       - POSTGRES_PORT=5432
       - POSTGRES_DB=app
       - POSTGRES_USER=postgres
-      #- POSTGRES_PASSWORD=1234567890
+      - POSTGRES_PASSWORD=1234567890
       - SENTRY_DSN=${SENTRY_DSN}
 
   backend:

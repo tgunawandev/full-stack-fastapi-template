@@ -58,6 +58,7 @@ services:
     command: >
       sh -c "
       env | grep POSTGRES_;
+      ping -c 2 db;
       bash scripts/prestart.sh
       "
     env_file:
